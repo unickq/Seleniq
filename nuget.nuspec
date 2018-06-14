@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Seleniq</id>
+    <title>Seleniq</title>
+    <version>$version$</version>
+    <authors>Nick Chursin</authors>
+    <owners>unickq</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/unickq/Seleniq</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Seleniq core tools</summary>
+    <description>Seleniq - one more extensions project for selenium</description>
+    <tags>Selenium</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" />
+    </frameworkAssemblies>
+    <dependencies>
+      <group targetFramework="net45">
+        <dependency id="Selenium.WebDriver" version="3.0.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Seleniq\bin\Release\Seleniq.dll" target="lib\net45" />
+  </files>
+</package>

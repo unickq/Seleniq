@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Seleniq", "Seleniq\Seleniq.csproj", "{D5081BC3-E37A-47F6-835B-7757005D37D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF42773B-9B69-4EEC-9D98-031DC9048B0C}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		nuget.nuspec = nuget.nuspec
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Seleniq.SpecFlow", "Seleniq.SpecFlow\Seleniq.SpecFlow.csproj", "{10F863A1-9855-46DC-BCDD-D4CEE80D4EA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seleniq.Example", "Seleniq.Example\Seleniq.Example.csproj", "{E84A7573-CE20-4E97-9C19-CF0C31EA2CFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5081BC3-E37A-47F6-835B-7757005D37D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5081BC3-E37A-47F6-835B-7757005D37D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5081BC3-E37A-47F6-835B-7757005D37D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5081BC3-E37A-47F6-835B-7757005D37D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10F863A1-9855-46DC-BCDD-D4CEE80D4EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10F863A1-9855-46DC-BCDD-D4CEE80D4EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10F863A1-9855-46DC-BCDD-D4CEE80D4EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10F863A1-9855-46DC-BCDD-D4CEE80D4EA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E84A7573-CE20-4E97-9C19-CF0C31EA2CFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E84A7573-CE20-4E97-9C19-CF0C31EA2CFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E84A7573-CE20-4E97-9C19-CF0C31EA2CFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E84A7573-CE20-4E97-9C19-CF0C31EA2CFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8237A8CB-C5D6-41F5-9839-B69A32552BD3}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net45</TargetFrameworks>
+<!--    <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>-->
+    <Authors>Nick Chursin</Authors>
+    <PackageLicenseUrl>https://github.com/unickq/Seleniq/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/unickq/Seleniq</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/unickq/Seleniq</RepositoryUrl>
+    <PackageTags>selenium</PackageTags>
+    <Description>Seleniq - one more extensions project for selenium</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Product></Product>
+    <Company />
+    <Version>0.3.0</Version>
+    <PackageIconUrl>https://raw.githubusercontent.com/unickq/Seleniq/master/logo.png</PackageIconUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Selenium.WebDriver" Version="3.8.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+</Project>
