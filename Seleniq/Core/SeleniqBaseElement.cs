@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using OpenQA.Selenium;
 using Seleniq.Extensions.Selenium;
 
 namespace Seleniq.Core
 {
-    public abstract class SeleniqBaseElement : SeleniqBase
+    public abstract class SeleniqBaseElement : SeleniqBase, IInitiable
     {
         protected By RootBy { get; }
         protected IWebElement Root { get; }
@@ -15,7 +16,7 @@ namespace Seleniq.Core
             var elements = Driver.FindElements(by);
             Root = elements.First();
             Root.JsFocus().JsHighlight();
-            if (elements.Count > 1) System.Console.WriteLine($"WARN: There are {elements.Count} elements {by} on page {Driver.Url}");
+            if (elements.Count > 1) Console.WriteLine($"WARN: There are {elements.Count} elements {by} on page {Driver.Url}");
         }
 
         protected SeleniqBaseElement(IWebElement root)

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
 using Seleniq.Core;
 using Seleniq.Example.PageObjects;
+using Seleniq.Example.PageObjects.MainPage;
 using Seleniq.Util;
 
 namespace Seleniq.Example.NUnitTests
@@ -25,7 +26,7 @@ namespace Seleniq.Example.NUnitTests
         public void Test(string query, int index, string url)
         {
             var mainPage = InstanceOf<BingMain>(true);
-            var searchPage = mainPage.SetQuery(query).ClickSubmit();
+            var searchPage = mainPage.SearchElement.SetQuery(query).ClickSubmit();
             searchPage.ValidateResultsForUrl(index, url);
             Console.WriteLine(((HeadlessDriver<ChromeDriver>) Driver).DriverService.ProcessId);
         }

@@ -2,6 +2,7 @@
 
 namespace Seleniq.Attributes
 {
+    /// <inheritdoc />
     /// <summary>
     /// Url attribute of of the <see cref="T:Seleniq.Core.PageObject" /> class.
     /// </summary>

@@ -1,33 +1,42 @@
-﻿version: 0.2.1.{build}
-
-environment:
-  packageVersion: 0.2.1
+﻿# Master
+-
+  branches:
+    only:
+      - master
+      version: 0.3.0.{build}
+      environment:
+        packageVersion: 0.3.0.{build}
+    only:
+      - dev
+      version: 0.2.3.{build}
+      environment:
+        packageVersion: 0.2.3.beta-{build}
   
-init:
-- ps: $env:buildVersion = "$env:packageVersion.$env:appveyor_build_number"
-- ps: if(!$env:appveyor_repo_tag_name){ $env:nugetVersion = $env:packageVersion+ "-beta-" + $env:appveyor_build_number } else { $env:nugetVersion = $env:appveyor_repo_tag_name}
-- ps: Update-AppveyorBuild -Version $env:buildVersion
+  init:
+   - ps: $env:buildVersion = "$env:packageVersion.$env:appveyor_build_number"
+   - ps: if(!$env:appveyor_repo_tag_name){ $env:nugetVersion = $env:packageVersion+ "-beta-" + $env:appveyor_build_number } else { $env:nugetVersion = $env:appveyor_repo_tag_name}
+   - ps: Update-AppveyorBuild -Version $env:buildVersion
     
-image: Visual Studio 2017
-configuration: Release
-platform: Any CPU
+  image: Visual Studio 2017
+  configuration: Release
+  platform: Any CPU
 
-dotnet_csproj:
-  patch: true
-  file: '**\Seleniq.csproj'
-  version: '{version}'
-  package_version: $(nugetVersion)
-  assembly_version: $(buildVersion)
-  file_version: $(buildVersion)
-  informational_version: $(nugetVersion)
+  dotnet_csproj:
+    patch: true
+    file: '**\Seleniq.csproj'
+    version: '{version}'
+    package_version: $(nugetVersion)
+    assembly_version: $(buildVersion)
+    file_version: $(buildVersion)
+    informational_version: $(nugetVersion)
 
-before_build:
-- nuget restore
+  before_build:
+  - nuget restore
 
-build:
-  verbosity: minimal
+  build:
+    verbosity: minimal
   
-test: off
+  test: off
 
-artifacts:
-- path: '**\Seleniq*.nupkg'
+  artifacts:
+  - path: '**\Seleniq*.nupkg'

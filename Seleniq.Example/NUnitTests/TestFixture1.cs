@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using Seleniq.Example.PageObjects;
+using Seleniq.Example.PageObjects.MainPage;
 
 namespace Seleniq.Example.NUnitTests
 {
@@ -15,7 +16,7 @@ namespace Seleniq.Example.NUnitTests
         public void T1(string query, int index, string url)
         {
             var mainPage = InstanceOf<BingMain>(true);
-            var searchPage = mainPage.SetQuery(query).ClickSubmit();
+            var searchPage = mainPage.SearchElement.SetQuery(query).ClickSubmit();
             searchPage.ValidateResultsForUrl(index, url);
         }
     }

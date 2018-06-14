@@ -6,7 +6,7 @@ namespace Seleniq.Core
     /// SeleniqBasePage - parent class for all classed built by PageObject Pattert
     /// </summary>
     /// <seealso cref="T:Seleniq.Core.SeleniqBase" />
-    public abstract class SeleniqBasePage : SeleniqBase
+    public abstract class SeleniqBasePage : SeleniqBase, IInitiable
     {
         /// <summary>
         /// Casts <see cref="T:Seleniq.Core.SeleniqBasePage" /> class.

@@ -16,9 +16,10 @@ namespace Seleniq.Extensions.Selenium
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="cssColor">Color of the CSS.</param>
-        public static IWebElement JsHighlight(this IWebElement element, string cssColor = "blue")
+        /// <param name="frameSize">Frame size</param>
+        public static IWebElement JsHighlight(this IWebElement element, string cssColor = "blue", int frameSize = 3)
         {
-            element.ExecuteScript($"arguments[0].style.border='3px solid {cssColor}'", element);
+            element.ExecuteScript($"arguments[0].style.border='{frameSize}px solid {cssColor}'", element);
             return element;
         }
 
@@ -27,14 +28,15 @@ namespace Seleniq.Extensions.Selenium
         /// </summary>
         /// <param name="elements">The elements.</param>
         /// <param name="cssColor">Color of the CSS.</param>
+        /// <param name="frameSize">Frame size</param>
         /// <returns></returns>
         public static IEnumerable<IWebElement> JsHighlight(this IEnumerable<IWebElement> elements,
-            string cssColor = "blue")
+            string cssColor = "blue", int frameSize = 3)
         {
             var webElements = elements.ToList();
             foreach (var element in webElements)
             {
-                element.JsHighlight(cssColor);
+                element.JsHighlight(cssColor, frameSize);
             }
             return webElements;
         }
