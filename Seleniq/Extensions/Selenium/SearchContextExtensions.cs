@@ -47,16 +47,22 @@ namespace Seleniq.Extensions.Selenium
             return wait.Until(condition);
         }
 
-
-        public static IList<IWebElement> GetElements(this ISearchContext context, By by)
+        public static IList<IWebElement> GetElements(this ISearchContext context, By by, string message = null)
         {
-            return context.GetElements(by, e => e.Displayed && e.Enabled);
+            return context.GetElements(by, e => e.Displayed && e.Enabled, message);
         }
 
         public static IList<IWebElement> GetElements(this ISearchContext context, By by,
-            Func<IWebElement, bool> condition)
+            Func<IWebElement, bool> condition, string message = null)
         {
-            return context.FindElements(by).Where(condition).ToList();
+            try
+            {
+                return context.FindElements(by).Where(condition).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new NoSuchElementException(message, e);
+            }
         }
 
         public static IList<IWebElement> GetElements(this ISearchContext context,

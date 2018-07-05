@@ -11,8 +11,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Product></Product>
     <Company />
-    <Version>0.3.0</Version>
+    <PackageVersion>0.0.1</PackageVersion>
     <PackageIconUrl>https://raw.githubusercontent.com/unickq/Seleniq/master/logo.png</PackageIconUrl>
+    <FileVersion>0.0.1</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Selenium.WebDriver" Version="3.8.0" />

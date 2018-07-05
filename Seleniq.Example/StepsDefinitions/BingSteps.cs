@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using Seleniq.Example.PageObjects;
+using Seleniq.Example.PageObjects.MainPage;
+using Seleniq.Example.PageObjects.SearchPage;
 using Seleniq.Extensions.Selenium;
 using Seleniq.SpecFlow;
 using TechTalk.SpecFlow;
@@ -16,6 +18,7 @@ namespace Seleniq.Example.StepsDefinitions
         [Given(@"I have opened Bing main page")]
         public void GivenIHaveOpenedBingMainPage()
         {
+
             Driver.NavigateTo("https://bing.com");
             Cache<BingMain>(true);
         }
@@ -23,7 +26,7 @@ namespace Seleniq.Example.StepsDefinitions
         [Given(@"I have entered (.*) into search box and clicked search button")]
         public void GivenIHaveEnteredIntoSearchBoxAndClickedSearchButton(string value)
         {
-            Cache<BingMain>().SetQuery(value).ClickSubmit();
+            Cache<BingMain>().SearchElement.SetQuery(value).ClickSubmit();
         }
 
         [Then(@"Page title should contain (.*)")]

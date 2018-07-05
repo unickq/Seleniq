@@ -46,12 +46,12 @@ namespace Seleniq.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Seleniq.Core.PageObject" /> class.
+        /// Initializes a new instance of the <see cref="T:Seleniq.Core.Initable" /> class.
         /// </summary>
         /// <typeparam name="TPage">The type of the page.</typeparam>
         /// <param name="useUrlFromClass">if set to <c>true</c> [use URL from class].</param>
         /// <returns></returns>
-        protected virtual TPage InstanceOf<TPage>(bool useUrlFromClass = false) where TPage : SeleniqBasePage
+        protected virtual TPage InstanceOf<TPage>(bool useUrlFromClass = false) where TPage : IInitiable
         {
             var urlAttributeValue = typeof(TPage).GetAttributeValue((PageUrlAttribute attr) => attr.Url);
             if (useUrlFromClass)
@@ -60,7 +60,7 @@ namespace Seleniq.Core
                 if (!urlAttributeValue.StartsWith("http"))
                 {
                     BaseUrl.CheckNotNullOrEmpty("BaseUrl", "BaseUrl property is not found on app.config");
-                    url = BaseUrl + urlAttributeValue;
+                    url = string.Concat(BaseUrl, urlAttributeValue);
                 }
                 return InstanceOf<TPage>(url);
             }
@@ -73,7 +73,7 @@ namespace Seleniq.Core
         /// <typeparam name="TPage">The type of the page.</typeparam>
         /// <param name="url">Url to navigate before </param>
         /// <returns></returns>
-        protected virtual TPage InstanceOf<TPage>(string url) where TPage : SeleniqBasePage
+        protected virtual TPage InstanceOf<TPage>(string url)  where TPage : IInitiable
         {
             Driver.Navigate().GoToUrl(url);
             return InstanceOf<TPage>();
