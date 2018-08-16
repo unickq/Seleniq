@@ -190,8 +190,7 @@ namespace Seleniq.Extensions.Selenium
 
         public static By GetBy(this IWebElement element)
         {
-            string xpath;
-            return GetBy(element, out xpath);
+            return GetBy(element, out _);
         }
 
         public static By GetBy(this IWebElement element, out string xpath)
@@ -201,7 +200,7 @@ namespace Seleniq.Extensions.Selenium
             sb.Append("//*[");
             foreach (var el in element.JsGetAttributes())
             {
-                sb.Append($"@{el.Key}='{el.Value.ToString()}'");
+                sb.Append($"@{el.Key}='{el.Value}'");
                 if (!el.Equals(attributesDict.Last())) sb.Append(" and ");
             }
             sb.Append("]");

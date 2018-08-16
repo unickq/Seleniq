@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Support.UI;
@@ -19,7 +20,25 @@ namespace Seleniq.Extensions.Selenium
         public static IWebElement GetElement(this ISearchContext context, By locator, double timeout = MediumTimeout,
             string message = null)
         {
+
             return context.GetElement(locator, e => e.Displayed & e.Enabled, timeout, message);
+        }
+
+        public static IWebElement GetElement(this ISearchContext context, By locator, Func<IWebDriver, bool> condition,
+            double timeout = MediumTimeout, string message = null)
+        {
+            try
+            {
+                var wait = context.Wait(timeout, message);
+                wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
+                wait.Until(driver => condition);
+                return context.FindElement(locator);
+            }
+            catch (WebDriverTimeoutException e)
+            {
+                throw new WebDriverTimeoutException(
+                    $"Unable to find locator {locator} on page {context.ToDriver().Url}\n{e.Message}");
+            }
         }
 
         public static IWebElement GetElement(this ISearchContext context, By locator, Func<IWebElement, bool> condition,
@@ -64,6 +83,8 @@ namespace Seleniq.Extensions.Selenium
                 throw new NoSuchElementException(message, e);
             }
         }
+
+
 
         public static IList<IWebElement> GetElements(this ISearchContext context,
             Func<IWebDriver, ReadOnlyCollection<IWebElement>> condition, double timeout = MediumTimeout,
@@ -110,6 +131,18 @@ namespace Seleniq.Extensions.Selenium
             string message = null)
         {
             return new WebDriverWait(context.ToDriver(), TimeSpan.FromSeconds(timeout)) {Message = message};
+        }
+
+        public static ISearchContext Wait(this ISearchContext context, double timeout)
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(timeout));
+            return context;
+        }
+
+        public static WebDriverWait Wait(this ISearchContext context, double timeout, double sleepInterval,
+            string message = null)
+        {
+            return new WebDriverWait(new SystemClock(), context.ToDriver(), TimeSpan.FromSeconds(timeout), TimeSpan.FromSeconds(sleepInterval)) {Message = message};
         }
 
         private static IJavaScriptExecutor JsExecutor(this IWebDriver driver)

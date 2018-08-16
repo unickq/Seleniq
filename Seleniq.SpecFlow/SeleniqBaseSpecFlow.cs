@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using OpenQA.Selenium;
+using Seleniq.Attributes;
 using Seleniq.Core;
+using Seleniq.Extensions;
 using TechTalk.SpecFlow;
 
 namespace Seleniq.SpecFlow
@@ -47,12 +50,16 @@ namespace Seleniq.SpecFlow
             var key = typeof(T).FullName;
             if (LocalScenarioContext.ContainsKey(key))
             {
-                if (reInit) LocalScenarioContext[key] = new T();
+                if (reInit)
+                {
+                    LocalScenarioContext[key] = new T();
+                }
             }
             else
             {
                 LocalScenarioContext[key] = new T();
             }
+
             return LocalScenarioContext.Get<T>(key);
         }
 
@@ -74,6 +81,7 @@ namespace Seleniq.SpecFlow
             {
                 LocalScenarioContext[key] = value;
             }
+
             return LocalScenarioContext.Get<T>(key);
         }
 
@@ -89,6 +97,13 @@ namespace Seleniq.SpecFlow
             if (LocalScenarioContext.ContainsKey(key))
                 return LocalScenarioContext.Get<T>(key);
             throw new KeyNotFoundException($"{key} doesn't exist in cache");
+        }
+
+        protected T Cache<T>(NavigateBy navigation) where T : SeleniqBase, new()
+        {
+            LocalScenarioContext[typeof(T).FullName ?? throw new InvalidOperationException("Type is null")] =
+                InstanceOf<T>(navigation);
+            return LocalScenarioContext.Get<T>(typeof(T).FullName);
         }
     }
 }

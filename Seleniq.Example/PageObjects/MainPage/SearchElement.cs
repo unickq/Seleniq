@@ -1,13 +1,16 @@
 ﻿using OpenQA.Selenium;
+using Seleniq.Attributes;
 using Seleniq.Core;
 using Seleniq.Example.PageObjects.SearchPage;
+using Seleniq.Extensions;
 using Seleniq.Extensions.Selenium;
 
 namespace Seleniq.Example.PageObjects.MainPage
 {
+    [ElementUrl("/")]
     public class SearchElement : SeleniqBaseElement
     {
-        public SearchElement() : base(By.ClassName("b_searchboxForm"))
+        public SearchElement() : base(By.CssSelector(".b_searchboxForm"))
         {
         }
 
@@ -20,6 +23,7 @@ namespace Seleniq.Example.PageObjects.MainPage
         public BingSearch ClickSubmit()
         {
             Root.GetElement(By.Id("sb_form_go"), message: "Can't search icn button").JsHighlight().Click();
+            Root.Wait().Until(ExpectedConditions.UrlContains("search?"));
             return new BingSearch();
         }
     }

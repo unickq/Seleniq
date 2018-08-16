@@ -15,11 +15,12 @@ namespace Seleniq.Extensions.Selenium
         /// Draws a frame around IWebElement.
         /// </summary>
         /// <param name="element">The element.</param>
+        /// <param name="style">Style</param>
         /// <param name="cssColor">Color of the CSS.</param>
         /// <param name="frameSize">Frame size</param>
-        public static IWebElement JsHighlight(this IWebElement element, string cssColor = "blue", int frameSize = 3)
+        public static IWebElement JsHighlight(this IWebElement element, string style = "solid", string cssColor = "blue", int frameSize = 2)
         {
-            element.ExecuteScript($"arguments[0].style.border='{frameSize}px solid {cssColor}'", element);
+            element.ExecuteScript($"arguments[0].style.border='{frameSize}px {style} {cssColor}'", element);
             return element;
         }
 
@@ -36,7 +37,7 @@ namespace Seleniq.Extensions.Selenium
             var webElements = elements.ToList();
             foreach (var element in webElements)
             {
-                element.JsHighlight(cssColor, frameSize);
+                element.JsHighlight("dotted", cssColor, frameSize);
             }
             return webElements;
         }

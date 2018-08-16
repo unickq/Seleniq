@@ -1,8 +1,10 @@
 using System;
 using System.Configuration;
+using System.Diagnostics;
+using System.Reflection;
+using System.Security;
 using System.Threading;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using Seleniq.Attributes;
 using Seleniq.Extensions;
 
@@ -13,7 +15,28 @@ namespace Seleniq.Core
     /// </summary>
     public class SeleniqBase
     {
-        protected virtual string BaseUrl { get; } = ConfigurationManager.AppSettings["BaseUrl"];
+        protected virtual string BaseUrlEnvVar => "SeleniqBaseUrl";
+
+        protected virtual string BaseUrl
+        {
+            get
+            {
+                try
+                {
+                    var envar = Environment.GetEnvironmentVariable(BaseUrlEnvVar);
+                    if (!string.IsNullOrEmpty(envar))
+                    {
+                        return envar;
+                    }
+                }
+                catch (SecurityException e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+
+                return ConfigurationManager.AppSettings["BaseUrl"];
+            }
+        }
 
         /// <summary>
         /// Gets the WebDriver.
@@ -51,9 +74,10 @@ namespace Seleniq.Core
         /// <typeparam name="TPage">The type of the page.</typeparam>
         /// <param name="useUrlFromClass">if set to <c>true</c> [use URL from class].</param>
         /// <returns></returns>
-        protected virtual TPage InstanceOf<TPage>(bool useUrlFromClass = false) where TPage : IInitiable
+        [Obsolete("Obsolete. Use InstanceOf<T>(NavigateBy navigation)")]
+        protected virtual TPage InstanceOf<TPage>(bool useUrlFromClass) where TPage : SeleniqBase, new()
         {
-            var urlAttributeValue = typeof(TPage).GetAttributeValue((PageUrlAttribute attr) => attr.Url);
+            var urlAttributeValue = typeof(TPage).GetAttributeValue((NavUrlAttribute attr) => attr.Url);
             if (useUrlFromClass)
             {
                 var url = urlAttributeValue;
@@ -62,9 +86,42 @@ namespace Seleniq.Core
                     BaseUrl.CheckNotNullOrEmpty("BaseUrl", "BaseUrl property is not found on app.config");
                     url = string.Concat(BaseUrl, urlAttributeValue);
                 }
-                return InstanceOf<TPage>(url);
+                Driver.Navigate().GoToUrl(url);
             }
-            return (TPage) Activator.CreateInstance(typeof(TPage));
+            return new TPage();
+        }
+
+        protected virtual T InstanceOf<T>(NavigateBy navigation) where T : SeleniqBase, new()
+        {
+            NavUrlAttribute attrType;
+            switch (navigation)
+            {
+                case NavigateBy.PageUrl:
+                    attrType = typeof(T).GetCustomAttribute<PageUrlAttribute>();
+                    break;
+                case NavigateBy.ElementUrl:
+                    attrType = typeof(T).GetCustomAttribute<ElementUrlAttribute>();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(navigation), navigation, null);
+            }
+
+            if (attrType == null)
+            {
+                throw new SeleniqException($"{typeof(T).Name} class doesn't have {navigation} attribute");
+            }
+
+            var pageUrl = attrType.Url;
+
+
+            if (!pageUrl.StartsWith("http"))
+            {
+                BaseUrl.CheckNotNullOrEmpty("BaseUrl", "BaseUrl property is not found on app.config");
+                pageUrl = string.Concat(BaseUrl, pageUrl);
+            }
+            Driver.Navigate().GoToUrl(pageUrl);
+
+            return new T();
         }
 
         /// <summary>
@@ -73,20 +130,21 @@ namespace Seleniq.Core
         /// <typeparam name="TPage">The type of the page.</typeparam>
         /// <param name="url">Url to navigate before </param>
         /// <returns></returns>
-        protected virtual TPage InstanceOf<TPage>(string url)  where TPage : IInitiable
+        protected virtual TPage InstanceOf<TPage>(string url)  where TPage : SeleniqBase, new()
         {
             Driver.Navigate().GoToUrl(url);
-            return InstanceOf<TPage>();
+            return new TPage();
         }
-
+    
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:OpenQA.Selenium.Support.UI.WebDriverWait" /> class.
+        /// Initializes an instance of <see cref="T:Seleniq.Core.SeleniqBaseElement" /> class.
         /// </summary>
-        /// <param name="seconds">The seconds.</param>
+        /// <typeparam name="TComponent">The element type.</typeparam>
         /// <returns></returns>
-        protected WebDriverWait BuildWebDriverWait(double seconds = 3)
+        [Obsolete("Page Approach is no longer supported. Please switch to component model")]
+        public virtual TComponent InitComponent<TComponent>() where TComponent : SeleniqBaseElement, new()
         {
-            return new WebDriverWait(Driver, TimeSpan.FromSeconds(seconds));
+            return new TComponent();
         }
     }
 }

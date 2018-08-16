@@ -11,9 +11,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Product></Product>
     <Company />
-    <PackageVersion>0.0.1</PackageVersion>
+    <PackageVersion>0.3.1</PackageVersion>
     <PackageIconUrl>https://raw.githubusercontent.com/unickq/Seleniq/master/logo.png</PackageIconUrl>
-    <FileVersion>0.0.1</FileVersion>
+    <FileVersion>0.3.1</FileVersion>
+    <PackageReleaseNotes>PageUrlAttribute, ElementUrlAttribute
+Better navigation and initialization</PackageReleaseNotes>
+    <AssemblyVersion>0.3.1</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Selenium.WebDriver" Version="3.8.0" />

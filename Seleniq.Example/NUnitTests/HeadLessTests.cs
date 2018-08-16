@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
+using Seleniq.Attributes;
 using Seleniq.Core;
 using Seleniq.Example.PageObjects;
 using Seleniq.Example.PageObjects.MainPage;
@@ -25,7 +26,7 @@ namespace Seleniq.Example.NUnitTests
         [Test, TestCaseSource(typeof(DataProvider), nameof(DataProvider.TestCases))]
         public void Test(string query, int index, string url)
         {
-            var mainPage = InstanceOf<BingMain>(true);
+            var mainPage = InstanceOf<BingMain>(NavigateBy.PageUrl);
             var searchPage = mainPage.SearchElement.SetQuery(query).ClickSubmit();
             searchPage.ValidateResultsForUrl(index, url);
             Console.WriteLine(((HeadlessDriver<ChromeDriver>) Driver).DriverService.ProcessId);

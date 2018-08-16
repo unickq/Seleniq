@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using Seleniq.Attributes;
 using Seleniq.Example.PageObjects;
 using Seleniq.Example.PageObjects.MainPage;
 using Seleniq.Example.PageObjects.SearchPage;
@@ -18,15 +20,13 @@ namespace Seleniq.Example.StepsDefinitions
         [Given(@"I have opened Bing main page")]
         public void GivenIHaveOpenedBingMainPage()
         {
-
-            Driver.NavigateTo("https://bing.com");
-            Cache<BingMain>(true);
+            Cache<BingMain>(NavigateBy.PageUrl);
         }
 
         [Given(@"I have entered (.*) into search box and clicked search button")]
         public void GivenIHaveEnteredIntoSearchBoxAndClickedSearchButton(string value)
         {
-            Cache<BingMain>().SearchElement.SetQuery(value).ClickSubmit();
+            Cache<SearchElement>(NavigateBy.ElementUrl).SetQuery(value).ClickSubmit();
         }
 
         [Then(@"Page title should contain (.*)")]
