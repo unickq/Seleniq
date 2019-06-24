@@ -15,7 +15,7 @@ namespace Seleniq.Core
     /// </summary>
     public class SeleniqBase
     {
-        protected virtual string BaseUrlEnvVar => "SeleniqBaseUrl";
+        protected virtual string BaseUrlEnvVar => "SELENIQ_BASEURL";
 
         protected virtual string BaseUrl
         {
@@ -33,8 +33,11 @@ namespace Seleniq.Core
                 {
                     Debug.WriteLine(e.Message);
                 }
-
-                return ConfigurationManager.AppSettings["BaseUrl"];
+#if NET45
+                return ConfigurationManager.AppSettings["BaseUrl"];            
+#else
+                return "Use SELENIQ_BASEURL envVar ";
+#endif         
             }
         }
 

@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
-<!--    <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>-->
+    <TargetFrameworks>net45;netstandard20</TargetFrameworks>
     <Authors>Nick Chursin</Authors>
-    <PackageLicenseUrl>https://github.com/unickq/Seleniq/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/unickq/Seleniq</PackageProjectUrl>
     <RepositoryUrl>https://github.com/unickq/Seleniq</RepositoryUrl>
     <PackageTags>selenium</PackageTags>
@@ -11,17 +10,25 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Product></Product>
     <Company />
-    <PackageVersion>0.3.1</PackageVersion>
+    <PackageVersion>0.3.2</PackageVersion>
     <PackageIconUrl>https://raw.githubusercontent.com/unickq/Seleniq/master/logo.png</PackageIconUrl>
-    <FileVersion>0.3.1</FileVersion>
-    <PackageReleaseNotes>PageUrlAttribute, ElementUrlAttribute
-Better navigation and initialization</PackageReleaseNotes>
-    <AssemblyVersion>0.3.1</AssemblyVersion>
+    <FileVersion>0.3.2</FileVersion>
+    <PackageReleaseNotes>netStandard20</PackageReleaseNotes>
+    <AssemblyVersion>0.3.2</AssemblyVersion>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Selenium.WebDriver" Version="3.8.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
   </ItemGroup>
-  <ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 </Project>
